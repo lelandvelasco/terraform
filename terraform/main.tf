@@ -1,7 +1,7 @@
 terraform {
   required_version = "~> 0.12.0"
   required_providers {
-    azurerm = "~> 2.46.0"
+    azurerm = "~> 2.11.0"
   }
   backend "azurerm" {
     resource_group_name   = "weu-storage-rg-t"
