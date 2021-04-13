@@ -43,19 +43,6 @@ resource "azurerm_network_interface" "nic" {
   }
 }
 
-resource "azurerm_network_interface" "nic_static_ip" {
-  count               = var.vmCount
-  name                = "${var.prefix}-vm-${count.index}-nic"
-  location            = var.location
-  tags                = var.tags
-  resource_group_name = azurerm_resource_group.rg.name
-  ip_configuration {
-    name                          = "ipconfig1"
-    subnet_id                     = var.subnet_id
-    private_ip_address_allocation = "Static"
-    private_ip_address            = "${azurerm_network_interface.nic[count.index].private_ip_address}"
-  }
-}
 /*
 resource "azurerm_virtual_machine" "vm" {
   count                 = vmCount
