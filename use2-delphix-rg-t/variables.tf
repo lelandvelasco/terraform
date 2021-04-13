@@ -33,11 +33,11 @@ variable "subnet_id" {
   description = "subnet resourced Id"
   default = "/subscriptions/a3c75f1f-98b3-458f-93c8-3131e2948b6d/resourceGroups/use2-network-rg-t/providers/Microsoft.Network/virtualNetworks/use2-network-vnet-t/subnets/test"
 }
-variable "ipAddress": {
-  description = "set range of ip address"
-  default = [
-    "10.1.22.15",
-    "10.1.22.16"
+variable "ipAddress" {
+  description: "list of ip address to be allocated"
+  default: [
+    "10.1.22.16",
+    "10.1.22.17"
   ]
 }
 variable "keyvault" {

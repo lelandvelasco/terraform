@@ -45,19 +45,6 @@ resource "azurerm_network_interface" "nic" {
     private_ip_address            = each.value
   }
 }
-resource "null_resource" "StaticIPsPrivateVMs" {
-  for_each = { for vm in var.vms : vm.hostname => vm }
-    provisioner "local-exec" {
-      command = <<EOT
-      az login --service-principal --username ${var.APP_ID} --password ${var.SP_PASSWORD} --tenant ${var.TENANT_ID}
-      az network nic ip-config update -g ${var.vm_resource_group} --nic-name ${azurerm_network_interface.nic[each.key].name} --name ${var.nic_ip_config} --set privateIpAllocationMethod="Static"
-      EOT
-    interpreter = ["powershell", "-Command"]
-  }
-  depends_on = [
-    azurerm_virtual_machine.vm
-  ]
-}
 /*
 resource "azurerm_virtual_machine" "vm" {
   count                 = vmCount
