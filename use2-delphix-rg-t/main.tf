@@ -46,7 +46,6 @@ resource "null_resource" "setstaticip" {
     count               = var.vmCount
     provisioner "local-exec" {
       command = <<EOT
-      az login --service-principal --username ${data.azurerm_key_vault_secret.clientID.value} --password ${data.azurerm_key_vault_secret.clientSecret.value} --tenant ${data.azurerm_key_vault_secret.tenantID.value}
       az network nic ip-config update -g ${azurerm_resource_group.rg.name} --nic-name "${var.prefix}-vm-${count.index}-nic" --name ipconfig1 --set privateIpAllocationMethod="Static"
       EOT
       interpreter = ["powershell", "-Command"]
