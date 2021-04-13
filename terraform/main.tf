@@ -4,18 +4,13 @@ terraform {
     storage_account_name  = "weuterraformstate"
     container_name        = "azurerm"
     key                   = "vnet.tfstate"
-  },
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "=2.46.0"
-    }
   }
 }
 
 provider "azurerm" {
   # The "feature" block is required for AzureRM provider 2.x.
   # If you're using version 1.x, the "features" block is not allowed.
+  version = "2.46.0"
   features {}
 }
 
