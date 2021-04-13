@@ -2,8 +2,8 @@ name: 'use2-delphix-rg-t'
 
 on:
   push:
-    paths:
-      - "terraform/use2-delphix-rg-t/"
+    branches:
+      - master
 
 jobs:
   validate-terraform:
