@@ -31,7 +31,9 @@ resource "azurerm_availability_set" "aset" {
 
 /* VM Network Interface Dynamic*/
 resource "azurerm_network_interface" "nic" {
+  /* Iterations */
   count               = var.vmCount
+  for_each = var.ipAddress
   name                = "${var.prefix}-vm-${count.index}-nic"
   location            = var.location
   tags                = var.tags
@@ -39,21 +41,22 @@ resource "azurerm_network_interface" "nic" {
   ip_configuration {
     name                          = "ipconfig1"
     subnet_id                     = var.subnet_id
-    private_ip_address_allocation = "Dynamic"
+    private_ip_address_allocation = "Static"
+    private_ip_address            = each.value
   }
 }
-resource "azurerm_network_interface" "vm_static_nic" {
-  count               = var.vmCount
-  name                = "${var.prefix}-vm-${count.index}-nic"
-  location            = var.location
-  tags                = var.tags
-  resource_group_name = azurerm_resource_group.rg.name
-  ip_configuration {
-    name                          = "ipconfig1"
-    subnet_id                     = var.subnet_id
-    private_ip_address_allocation = "static"
-    private_ip_address            = azurerm_network_interface.nic.private_ip_address
+resource "null_resource" "StaticIPsPrivateVMs" {
+  for_each = { for vm in var.vms : vm.hostname => vm }
+    provisioner "local-exec" {
+      command = <<EOT
+      az login --service-principal --username ${var.APP_ID} --password ${var.SP_PASSWORD} --tenant ${var.TENANT_ID}
+      az network nic ip-config update -g ${var.vm_resource_group} --nic-name ${azurerm_network_interface.nic[each.key].name} --name ${var.nic_ip_config} --set privateIpAllocationMethod="Static"
+      EOT
+    interpreter = ["powershell", "-Command"]
   }
+  depends_on = [
+    azurerm_virtual_machine.vm
+  ]
 }
 /*
 resource "azurerm_virtual_machine" "vm" {
