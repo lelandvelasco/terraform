@@ -41,6 +41,12 @@ resource "azurerm_network_interface" "nic" {
     subnet_id                     = var.subnet_id
     private_ip_address_allocation = "Dynamic"
   }
+  ip_configuration {
+    name                          = "ipconfig2"
+    subnet_id                     = var.subnet_id
+    private_ip_address_allocation = "Static"
+    private_ip_address            = azurerm_network_interface.nic.private_ip_address
+  }
 }
 
 /*
