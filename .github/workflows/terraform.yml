@@ -3,8 +3,8 @@ name: 'Terraform Test CI'
 #  - pull_request
 on:
   push:
-    branches:
-      - master
+    paths:
+      - terraform
 
 jobs:
   validate-terraform:
