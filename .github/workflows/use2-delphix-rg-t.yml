@@ -1,6 +1,5 @@
 name: 'use2-delphix-rg-t'
-#on:
-#  - pull_request
+
 on:
   push:
     paths:
