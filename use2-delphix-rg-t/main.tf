@@ -41,12 +41,16 @@ resource "azurerm_network_interface" "nic" {
     subnet_id                     = var.subnet_id
     private_ip_address_allocation = "Dynamic"
   }
-  ip_configuration {
-    name                          = "ipconfig2"
-    subnet_id                     = var.subnet_id
-    private_ip_address_allocation = "Static"
-    private_ip_address            = azurerm_network_interface.nic.name.private_ip_address
+  resource "null_resource" "setstaticip" {
+    provisioner "local-exec" {
+      command = <<EOT
+      az login --service-principal --username ${data.azurerm_key_vault_secret.clientID.value} --password ${data.azurerm_key_vault_secret.clientSecret.value} --tenant ${data.azurerm_key_vault_secret.tenantID.value}
+      az network nic ip-config update -g ${azurerm_resource_group.rg.name} --nic-name "${var.prefix}-vm-${count.index}-nic" --name ipconfig1 --set privateIpAllocationMethod="Static"
+      EOT
+      interpreter = ["powershell", "-Command"]
+    }
   }
+
 }
 
 /*
