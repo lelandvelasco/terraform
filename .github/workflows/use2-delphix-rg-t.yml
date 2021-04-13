@@ -4,7 +4,7 @@ name: 'use2-delphix-rg-t Test CI'
 on:
   push:
     paths:
-      - use2-delphix-rg-t
+      - "./use2-delphix-rg-t"
 
 jobs:
   validate-terraform:
