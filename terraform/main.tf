@@ -13,8 +13,6 @@ terraform {
 }
 
 provider "azurerm" {
-  # skip provider rego because we are using a service principal with limited access to Azure
-  skip_provider_registration = "true"
   features {}
 }
 #Create Resource Group
