@@ -22,9 +22,6 @@ resource "azurerm_resource_group" "rg" {
     tags      = var.tags
 }
 
-provider "azurerm" {
-  features {}
-}
 resource "azurerm_key_vault" "keyvault" {
   name                = "weu-global-keyvault-t"
   resource_group_name = azurerm_resource_group.rg.name
