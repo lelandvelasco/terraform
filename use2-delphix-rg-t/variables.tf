@@ -35,7 +35,7 @@ variable "subnet_id" {
 }
 variable "ipAddress" {
   description: "list of ip address to be allocated"
-  default: [
+  default = [
     "10.1.22.16",
     "10.1.22.17"
   ]
