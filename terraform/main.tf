@@ -1,27 +1,22 @@
 terraform {
-  backend "azurerm" {
-    resource_group_name   = "weu-storage-rg-t"
-    storage_account_name  = "weuterraformstate"
-    container_name        = "weu"
-    key                   = "vnet.tfstate"
-  }
-}
-
-terraform {
+  required_version = "~> 0.12.0"
   required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "=2.46.0"
+    azurerm = "~> 2.11.0"
+  }
+  backend "remote" {
+    hostname     = "app.terraform.io"
+    organization = "leevee"
+    workspaces {
+      name = "MyTestEnvironment"
     }
   }
 }
 
 provider "azurerm" {
-  # The "feature" block is required for AzureRM provider 2.x.
-  # If you're using version 1.x, the "features" block is not allowed.
+  # skip provider rego because we are using a service principal with limited access to Azure
+  skip_provider_registration = "true"
   features {}
 }
-
 #Create Resource Group
 resource "azurerm_resource_group" "tamops" {
   name     = "tamops"
