@@ -3,12 +3,11 @@ terraform {
   required_providers {
     azurerm = "~> 2.11.0"
   }
-  backend "remote" {
-    hostname     = "app.terraform.io"
-    organization = "leevee"
-    workspaces {
-      name = "MyTestEnvironment"
-    }
+  backend "azurerm" {
+    resource_group_name   = "weu-storage-rg-t"
+    storage_account_name  = "weuterraformstate"
+    container_name        = "weu"
+    key                   = "weuvnett.tfstate"
   }
 }
 
