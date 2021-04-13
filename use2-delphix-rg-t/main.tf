@@ -32,7 +32,7 @@ resource "azurerm_availability_set" "aset" {
 /* VM Network Interface*/
 resource "azurerm_network_interface" "nic" {
   count               = var.vmCount
-  name                = "${var.prefix}-vm-${format(“%02d”, count.index)}-nic"
+  name                = "${var.prefix}-vm-${count.index}-nic"
   location            = var.location
   tags                = var.tags
   resource_group_name = azurerm_resource_group.rg.name
