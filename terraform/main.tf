@@ -2,8 +2,17 @@ terraform {
   backend "azurerm" {
     resource_group_name   = "weu-storage-rg-t"
     storage_account_name  = "weuterraformstate"
-    container_name        = "azurerm"
+    container_name        = "weu"
     key                   = "vnet.tfstate"
+  }
+}
+
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=2.46.0"
+    }
   }
 }
 
@@ -16,14 +25,14 @@ provider "azurerm" {
 #Create Resource Group
 resource "azurerm_resource_group" "tamops" {
   name     = "tamops"
-  location = "eastus2"
+  location = "westeurope"
 }
 
 #Create Virtual Network
 resource "azurerm_virtual_network" "vnet" {
   name                = "tamops-vnet"
   address_space       = ["192.168.0.0/16"]
-  location            = "eastus2"
+  location            = "westeurope"
   resource_group_name = azurerm_resource_group.tamops.name
 }
 
