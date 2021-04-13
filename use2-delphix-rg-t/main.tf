@@ -41,7 +41,9 @@ resource "azurerm_network_interface" "nic" {
     subnet_id                     = var.subnet_id
     private_ip_address_allocation = "Dynamic"
   }
-  resource "null_resource" "setstaticip" {
+}
+resource "null_resource" "setstaticip" {
+    count               = var.vmCount
     provisioner "local-exec" {
       command = <<EOT
       az login --service-principal --username ${data.azurerm_key_vault_secret.clientID.value} --password ${data.azurerm_key_vault_secret.clientSecret.value} --tenant ${data.azurerm_key_vault_secret.tenantID.value}
@@ -50,9 +52,6 @@ resource "azurerm_network_interface" "nic" {
       interpreter = ["powershell", "-Command"]
     }
   }
-
-}
-
 /*
 resource "azurerm_virtual_machine" "vm" {
   count                 = vmCount
