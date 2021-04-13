@@ -3,8 +3,8 @@ name: 'use2-delphix-rg-t Test CI'
 #  - pull_request
 on:
   push:
-    branches:
-      - master
+    paths:
+      - use2-delphix-rg-t
 
 jobs:
   validate-terraform:
