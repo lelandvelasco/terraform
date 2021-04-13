@@ -1,18 +1,18 @@
 terraform {
+  required_version = "~> 0.12.0"
   required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "2.46.0"
-    }
+    azurerm = "~> 2.46.0"
   }
-}
-terraform {
   backend "azurerm" {
     resource_group_name   = "weu-storage-rg-t"
     storage_account_name  = "weuterraformstate"
-    container_name        = "azurerm"
-    key                   = "weukeyvaultrgt.tfstate"
+    container_name        = "weu"
+    key                   = "weuvnet2t.tfstate"
   }
+}
+
+provider "azurerm" {
+  features {}
 }
 
 /* Resource Group Name */
