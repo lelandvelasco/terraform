@@ -6,6 +6,14 @@ terraform {
     }
   }
 }
+terraform {
+  backend "azurerm" {
+    resource_group_name   = "weu-storage-rg-t"
+    storage_account_name  = "weuterraformstate"
+    container_name        = "azurerm"
+    key                   = "weukeyvaultrgt.tfstate"
+  }
+}
 
 /* Resource Group Name */
 resource "azurerm_resource_group" "rg" {
