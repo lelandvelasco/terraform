@@ -1,0 +1,27 @@
+{
+  "recommendations": [
+    "dbaeumer.jshint",
+    "ms-vscode.azurecli",
+    "msazurermtools.azurerm-vscode-tools",
+    "donjayamanne.git-extension-pack",
+    "ms-vscode.powershell",
+    "vscode-icons-team.vscode-icons",
+    "DavidAnson.vscode-markdownlint",
+    "streetsidesoftware.code-spell-checker",
+    "MS-vsliveshare.vsliveshare",
+    "shardulm94.trailing-spaces",
+    "msazurermtools.azurerm-vscode-tools",
+    "ms-azuretools.vscode-docker",
+    "docsmsft.docs-authoring-pack",
+    "docsmsft.docs-article-templates",
+    "docsmsft.docs-images",
+    "docsmsft.docs-linting",
+    "docsmsft.docs-markdown",
+    "docsmsft.docs-metadata",
+    "docsmsft.docs-preview",
+    "docsmsft.docs-yaml",
+    "redhat.vscode-yaml",
+    "hashicorp.terraform",
+    "ms-azure-devops.azure-pipelines"
+  ]
+}

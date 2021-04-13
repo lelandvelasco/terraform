@@ -1,0 +1,29 @@
+{
+  "gitlens.advanced.messages": {
+    "suppressShowKeyBindingsNotice": true
+  },
+  "gitlens.showWhatsNewAfterUpgrades": false,
+  "trailing-spaces.highlightCurrentLine": true,
+  "team.showWelcomeMessage": false,
+  "git.autofetch": true,
+  "editor.insertSpaces": true,
+  "json.format.enable": true,
+  "markdown.extension.tableFormatter.enabled": true,
+  "editor.tabSize": 2,
+  "files.autoSave": "afterDelay",
+  "files.defaultLanguage": "json",
+  "editor.renderWhitespace": "all",
+  "files.trimFinalNewlines": true,
+  "files.insertFinalNewline": true,
+  "[powershell]": {
+    "editor.tabSize": 2
+  },
+  "[json]": {
+    "editor.tabSize": 2
+  },
+  "[markdown]": {
+    "editor.tabSize": 2
+  },
+  "yaml.schemas": {},
+  "workbench.iconTheme": "default dark"
+}
