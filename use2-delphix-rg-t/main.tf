@@ -31,9 +31,7 @@ resource "azurerm_availability_set" "aset" {
 
 /* VM Network Interface Dynamic*/
 resource "azurerm_network_interface" "nic" {
-  /* Iterations */
   count               = var.vmCount
-  for_each = var.ipAddress
   name                = "${var.prefix}-vm-${count.index}-nic"
   location            = var.location
   tags                = var.tags
@@ -41,8 +39,7 @@ resource "azurerm_network_interface" "nic" {
   ip_configuration {
     name                          = "ipconfig1"
     subnet_id                     = var.subnet_id
-    private_ip_address_allocation = "Static"
-    private_ip_address            = each.value
+    private_ip_address_allocation = "Dynamic"
   }
 }
 /*
