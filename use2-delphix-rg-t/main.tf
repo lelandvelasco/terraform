@@ -30,16 +30,3 @@ resource "azurerm_availability_set" "aset" {
 }
 
 /* VM Network Interface Static*/
-resource "azurerm_network_interface" "nic" {
-  for_each            = toset(var.ipConfiguration)
-  name                = "${var.prefix}-vm-${each.index}-nic"
-  location            = var.location
-  tags                = var.tags
-  resource_group_name = azurerm_resource_group.rg.name
-  ip_configuration {
-    name                          = "ipconfig1"
-    subnet_id                     = var.subnet_id
-    private_ip_address_allocation = "Static"
-    private_ip_address            = each.value
-  }
-}
