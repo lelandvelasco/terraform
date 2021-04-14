@@ -31,7 +31,7 @@ resource "azurerm_availability_set" "aset" {
 
 /* VM Network Interface Static*/
 resource "azurerm_network_interface" "nic" {
-  for_each            = toset(var.ip_configuration)
+  for_each            = toset(var.ipConfiguration)
   name                = "${var.prefix}-vm-${each.key}-nic"
   location            = var.location
   tags                = var.tags
