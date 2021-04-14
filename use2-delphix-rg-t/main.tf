@@ -28,85 +28,19 @@ resource "azurerm_availability_set" "aset" {
   resource_group_name = azurerm_resource_group.rg.name
   tags                = var.tags
 }
+/* NIC Static IP Loop */
+locals {
+  vm_datadiskdisk_count_map = { for k in toset(var.ipAddress) : k => var.ipCount }
+  luns                      = { for k in local.datadisk_lun_map : k.datadisk_name => k.lun }
+  datadisk_lun_map = flatten([
+    for vm_name, count in local.vm_datadiskdisk_count_map : [
+      for i in range(count) : {
+        datadisk_name = format(vm_name, i)
+        lun           = i
+      }
+    ]
+  ])
+}
 
 /* VM Network Interface Dynamic*/
-resource "azurerm_network_interface" "nic" {
-  count               = var.vmCount
-  name                = "${var.prefix}-vm-${count.index}-nic"
-  location            = var.location
-  tags                = var.tags
-  resource_group_name = azurerm_resource_group.rg.name
-  ip_configuration {
-    name                          = "ipconfig1"
-    subnet_id                     = var.subnet_id
-    private_ip_address_allocation = "Dynamic"
-  }
-}
-resource "null_resource" "setstaticip" {
-    count               = var.vmCount
-    provisioner "local-exec" {
-      command = <<EOT
-      az network nic ip-config update -g ${azurerm_resource_group.rg.name} --nic-name "${var.prefix}-vm-${count.index}-nic" --name ipconfig1 --set privateIpAllocationMethod="Static"
-      EOT
-      interpreter = ["powershell", "-Command"]
-    }
-  }
-/*
-resource "azurerm_virtual_machine" "vm" {
-  count                 = vmCount
 
-  name                  = "${var.prefix}-vm"
-  location              = var.location
-  tags                  = var.tags
-  resource_group_name   = azurerm_resource_group.rg.name
-  network_interface_ids = [azurerm_network_interface.nic.id]
-  vm_size               = var.vm_size
-
-  admin_ssh_key {
-    username = var.username
-    public_key = data.azurerm_key_vault_secret.default.value
-  }
-
-  storage_image_reference {
-    publisher = "delphix"
-    offer     = "delphix_dynamic_data_platform"
-    sku       = "delphix_dynamic_data_platform_5-3"
-    version   = "latest"
-  }
-
-  storage_os_disk {
-    name              = "${var.prefix}-vm-os"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
-  }
-
-  os_profile_linux_config {
-    disable_password_authentication = true
-  }
-
-  boot_diagnostics {
-        storage_account_uri = var.storageaccount
-  }
-  network_interface_ids {
-    azurerm_network_interface.nic.id
-  }
-  azurerm_availability_set {
-    azurerm_availability_set.aset.id
-  }
-  azurerm_managed_disk {
-    name          = ""
-    create_option = ""
-    storage_account_type
-  }
-}
-
-resource "azurerm_managed_disk" "disk1" {
-  name                 = "${var.prefix}-vm-disk1"
-  location             = var.location
-  resource_group_name  = azurerm_resource_group.rg.name
-  storage_account_type = "Standard_LRS"
-  create_option        = "Empty"
-  disk_size_gb         = 10
-}
-*/
