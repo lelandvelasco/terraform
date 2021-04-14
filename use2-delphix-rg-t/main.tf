@@ -31,11 +31,12 @@ resource "azurerm_availability_set" "aset" {
 /* NIC Static IP Loop */
 locals {
   vm_datadiskdisk_count_map = { for k in toset(var.ipAddress) : k => var.ipCount }
-  luns                      = { for k in local.datadisk_lun_map : k.datadisk_name }
+  luns                      = { for k in local.datadisk_lun_map : k.datadisk_name => k.lun }
   datadisk_lun_map = flatten([
     for vm_name, count in local.vm_datadiskdisk_count_map : [
       for i in range(count) : {
         datadisk_name = vm_name
+        lun           = i
       }
     ]
   ])
