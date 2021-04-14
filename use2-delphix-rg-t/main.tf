@@ -44,8 +44,7 @@ locals {
 
 /* VM Network Interface Static*/
 resource "azurerm_network_interface" "nic" {
-  for_each            = toset([for j in local.datadisk_lun_map : j.datadisk_name])
-  count               = var.vmCount
+  count               = var.vmCount * toset([for j in local.datadisk_lun_map : j.datadisk_name])
   name                = "${var.prefix}-vm-${count.index}-nic"
   location            = var.location
   tags                = var.tags
