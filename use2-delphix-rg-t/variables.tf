@@ -8,7 +8,7 @@ variable "dataDiskCount" {
   default = 1
 }
 
-variable "ipAddress" {
+variable "ipConfiguration" {
   description = "list of ip address to be allocated"
   default = [
     "10.1.22.16",

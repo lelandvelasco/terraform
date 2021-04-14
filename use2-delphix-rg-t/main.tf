@@ -28,24 +28,11 @@ resource "azurerm_availability_set" "aset" {
   resource_group_name = azurerm_resource_group.rg.name
   tags                = var.tags
 }
-/* NIC Static IP Loop */
-locals {
-  vm_datadiskdisk_count_map = { for k in toset(var.ipAddress) : k => 1 }
-  luns                      = { for k in local.datadisk_lun_map : k.datadisk_name => k.lun }
-  datadisk_lun_map = flatten([
-    for vm_name, count in local.vm_datadiskdisk_count_map : [
-      for i in range(count) : {
-        datadisk_name = vm_name
-        lun           = i
-      }
-    ]
-  ])
-}
 
 /* VM Network Interface Static*/
 resource "azurerm_network_interface" "nic" {
-  for_each            = toset([for j in local.datadisk_lun_map : j.datadisk_name])
-  name                = "${var.prefix}-vm-${count.index}-nic"
+  for_each            = toset(var.ip_configuration)
+  name                = "${var.prefix}-vm-${each.key}-nic"
   location            = var.location
   tags                = var.tags
   resource_group_name = azurerm_resource_group.rg.name
@@ -53,6 +40,6 @@ resource "azurerm_network_interface" "nic" {
     name                          = "ipconfig1"
     subnet_id                     = var.subnet_id
     private_ip_address_allocation = "Static"
-    private_ip_address            = each.key
+    private_ip_address            = each.value
   }
 }
