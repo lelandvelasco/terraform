@@ -8,15 +8,6 @@ variable "dataDiskCount" {
   default = 1
 }
 
-variable "nicCount" {
-  description = "number of VM to be create"
-  default = 1
-}
-variable "ipCount" {
-  description = "number of VM to be create"
-  default = 1
-}
-
 variable "ipAddress" {
   description = "list of ip address to be allocated"
   default = [

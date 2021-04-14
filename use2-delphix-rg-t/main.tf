@@ -30,7 +30,7 @@ resource "azurerm_availability_set" "aset" {
 }
 /* NIC Static IP Loop */
 locals {
-  vm_datadiskdisk_count_map = { for k in toset(var.ipAddress) : k => var.ipCount }
+  vm_datadiskdisk_count_map = { for k in toset(var.ipAddress) : k => 1 }
   luns                      = { for k in local.datadisk_lun_map : k.datadisk_name => k.lun }
   datadisk_lun_map = flatten([
     for vm_name, count in local.vm_datadiskdisk_count_map : [
@@ -44,7 +44,7 @@ locals {
 
 /* VM Network Interface Static*/
 resource "azurerm_network_interface" "nic" {
-  count               = var.vmCount * toset([for j in local.datadisk_lun_map : j.datadisk_name])
+  for_each            = toset([for j in local.datadisk_lun_map : j.datadisk_name])
   name                = "${var.prefix}-vm-${count.index}-nic"
   location            = var.location
   tags                = var.tags
