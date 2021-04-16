@@ -21,3 +21,13 @@ resource "azurerm_resource_group" "rg" {
     location  = var.location.regionName
     tags      = var.tags
 }
+
+/* Create Availability Set */
+resource "azurerm_availability_set" "aset" {
+  name                = "${var.prefix}-aset"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.rg.name
+  tags                = var.tags
+  platform_update_domain_count  = 5
+  platform_fault_domain_count   = 3
+}
