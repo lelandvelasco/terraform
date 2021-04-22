@@ -1,9 +1,7 @@
 name: 'use2-delphix-rg-t'
 
 on:
-  push:
-    branches:
-      - master
+  - pull_request
 
 jobs:
   validate-terraform:
