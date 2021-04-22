@@ -1,3 +1,3 @@
 module "keyvault" {
-  source = "modules/keyvault"
+  source = "./modules/keyvault"
 }
