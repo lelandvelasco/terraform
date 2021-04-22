@@ -6,8 +6,8 @@ module "keyvault" {
     container_name        = "weu"
   }
   tags {
-    Entity: "Test"
-    Owner: "Leland Velasco"
+    Entity = "Test"
+    Owner  = "Leland Velasco"
   }
   resourceGroupName = "weu-security-rg-t"
   keyVaultName      = "weu-global-keyvault-t"
