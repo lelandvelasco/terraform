@@ -7,7 +7,7 @@ terraform {
     resource_group_name   = var.backend-tfstate.resource_group_name
     storage_account_name  = var.backend-tfstate.storage_account_name
     container_name        = var.backend-tfstate.container_name
-    key                   = "${var.resourceGroupName}.tfstate"
+    key                   = "${var.resourceGroupName}-${var.keyVaultName}.tfstate"
   }
 }
 
