@@ -1,5 +1,5 @@
 module "keyvault" {
-  source = "terraform/modules/keyvault/"
+  source = "./terraform/modules/keyvault/"
   backend-tfstate {
     resource_group_name   = "weu-storage-rg-t"
     storage_account_name  = "weuterraformstate"
