@@ -4,7 +4,7 @@ name: 'weu-security-tg-t Test CI'
 on:
   push:
     paths:
-      - weu-security-rg-t
+      - environment/weu-security-rg-t
 
 jobs:
   validate-terraform:
