@@ -3,9 +3,8 @@ name: 'weu-security-tg-t Test CI'
 #  - pull_request
 on:
   push:
-    paths:
-      - environment/weu-security-rg-t
-
+    branches:
+      - master
 jobs:
   validate-terraform:
     name: 'Validate and plan deploy'
